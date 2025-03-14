@@ -1,0 +1,24 @@
+<div class="container d-flex flex-column justify-content-center vh-100">
+  <h3 class="display-3 text-danger fw-bold mb-3">500 - Internal Server Error</h3>
+
+  @if (error) {
+    <h5 class="text-danger mb-3">Error: {{ error.message }}</h5>
+    <p class="fw-semibold text-muted">Note: If you are seeing this error, Angular is not to blame!</p>
+
+    <div class="text-start w-100 max-w-600">
+      <h6 class="mb-2">What to do next?</h6>
+      <ol class="list-group list-group-numbered mb-4">
+        <li class="list-group-item">Open Chrome Dev Tools and check the failing network request in the Network tab.</li>
+        <li class="list-group-item">Examine the URL of the failing request.</li>
+        <li class="list-group-item">Reproduce the error in Postman — if you can reproduce the error, Angular is not to
+          blame.
+        </li>
+      </ol>
+
+      <p class="fw-bold mb-2">Stack Trace:</p>
+      <pre class="bg-light p-3 text-start rounded shadow-sm overflow-auto">
+        {{ error.details }}
+      </pre>
+    </div>
+  }
+</div>

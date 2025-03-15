@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Member } from '../../../core/models/member';
 import { MemberService } from '../../../core/services/member.service';
 import { AccountService } from '../../../core/services/account.service';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-member-edit',
@@ -16,12 +17,21 @@ import { ToastrService } from 'ngx-toastr';
 export class MemberEditComponent implements OnInit {
   @ViewChild('editForm', { static: false }) editForm?: NgForm;
 
+  @HostListener('window:beforeunload', ['$event'])
+  notify($event: any) {
+    if (this.editForm?.dirty) {
+      $event.preventDefault();
+    }
+  }
+
+
   member?: Member;
 
   constructor(
     private accountService: AccountService,
     private memberService: MemberService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -38,10 +48,17 @@ export class MemberEditComponent implements OnInit {
     });
   }
 
+
   updateMember() {
     if (!this.member) return;
-    console.log(this.member);
-    this.editForm?.reset(this.member);
-    this.toastr.success('Profile updated successfully');
+
+    this.memberService.updateMember(this.editForm?.value).subscribe({
+      next: _ => {
+        this.toastr.success('Profile updated successfully');
+        this.editForm?.reset(this.member);
+        this.router.navigate(['/members/' + this.member?.username]);
+      },
+      error: (err) => this.toastr.error('Failed to update member data')
+    });
   }
 }

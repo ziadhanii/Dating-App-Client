@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {AccountService} from './core/services/account.service';
-import {RouterOutlet} from '@angular/router';
-import {NavBarComponent} from './components/nav-bar/nav-bar.component';
+import { Component, OnInit } from '@angular/core';
+import { AccountService } from './core/services/account.service';
+import { RouterOutlet } from '@angular/router';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { NgxSpinnerComponent } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
-  imports: [NavBarComponent, RouterOutlet],
+  imports: [NavBarComponent, RouterOutlet, NgxSpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
